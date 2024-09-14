@@ -37,23 +37,32 @@ for each wear category.</p>
 8. Visulaize the sequence patterns using matplotlib.
 </p>
 ### Program:
-
 ```python
 from collections import defaultdict
 from itertools import combinations
 # Function to generate candidate k-item sequences
 def generate_candidates(dataset, k):
+  candidates = defaultdict(int)
+  for seq in dataset:
+     for comb in combinations (seq, k):
 
+         candidates [comb] += 1
 
-    /WRITE YOUR CODE HERE/
-
+  return {item: support for item, support in candidates.items() if support >= min_support}
 
 #Function to perform GSP algorithm
 def gsp(dataset, min_support):
+  frequent_patterns = defaultdict(int) # Added assignment operator
+  k = 1
+  sequences = dataset
+  while True:
+      candidates = generate_candidates (sequences, k)
+      if not candidates:
+         break
+      frequent_patterns.update(candidates)
+      k += 1
 
-
-  /WRITE YOUR CODE HERE/
-
+  return frequent_patterns
 
 #Example dataset for each category
 top_wear_data = [
@@ -102,11 +111,11 @@ else:
  print("No frequent sequential patterns found in Party Wear.")
 ```
 ### Output:
+![image](https://github.com/user-attachments/assets/89264306-e5fd-43a5-8036-726c7749a658)
 
 ### Visualization:
 ```python
 import matplotlib.pyplot as plt
-
 # Function to visualize frequent sequential patterns with a line plot
 def visualize_patterns_line(result, category):
     if result:
@@ -130,6 +139,8 @@ visualize_patterns_line(bottom_wear_result, 'Bottom Wear')
 visualize_patterns_line(party_wear_result, 'Party Wear')
 ```
 ### Output:
-
+![image](https://github.com/user-attachments/assets/efe41149-b68e-4232-aafe-422275d6cb93)
+![image](https://github.com/user-attachments/assets/6419cb44-4182-4575-9221-26a2e0eb52f7)
 
 ### Result:
+Thus the implementation of the GSP algorithm in python has been successfully executed.
